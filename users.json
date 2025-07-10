@@ -1,13 +1,13 @@
 {
   "users": [
     {
-      "ID": "ehdnjs100",
+      "id": "ehdnjs100",
       "pw": "1111",
       "expire": "2025년 7월 30일",
       "name": "김도원"
     },
     {
-      "ID": "test",
+      "id": "test",
       "pw": "1111",
       "expire": "2025년 7월 10일",
       "name": "문준호"
