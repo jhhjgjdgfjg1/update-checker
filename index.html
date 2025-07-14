@@ -6,6 +6,9 @@
 <title>수진선식 스마트스토어형</title>
 <style>
   /* 기본 스타일 */
+  html {
+    scroll-behavior: smooth; /* 부드러운 스크롤 효과 */
+  }
   body {
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
@@ -19,7 +22,8 @@
 
   /* --- 헤더 스타일 --- */
   .pc-header .top-bar {
-    background: #e5d3b3; padding: 1rem 0; border-bottom: 1px solid #ddd;
+    background: #e5d3b3; padding: 0.8rem 0; border-bottom: 1px solid #ddd;
+    transition: background-color 0.5s ease;
   }
   .pc-header .top-bar .container {
     max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between;
@@ -34,18 +38,49 @@
 
   .mobile-header-wrapper .top-bar {
     background: #e5d3b3; padding: 0.8rem 1rem; text-align: center;
+    transition: background-color 0.5s ease;
   }
-  .title-rotator { position: relative; height: 1.2em; overflow: hidden; }
+  
+  /* 스크롤 시 상단 고정 스타일 */
+  .mobile-header-wrapper.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 990;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .mobile-header-wrapper.sticky .top-bar {
+     background-color: rgba(229, 211, 179, 0.95);
+  }
+  .mobile-header-wrapper.sticky .top-bar.bg-yellow { background-color: rgba(255, 235, 59, 0.95) !important; }
+  .mobile-header-wrapper.sticky .top-bar.bg-pink { background-color: rgba(233, 30, 99, 0.95) !important; }
+  .mobile-header-wrapper.sticky .top-bar.bg-black { background-color: rgba(51, 51, 51, 0.95) !important; }
+
+
+  .title-rotator { position: relative; height: 1.2em; overflow: hidden; flex-grow: 1; text-align: center; }
   .title-item {
     position: absolute; width: 100%; left: 0; top: 150%; opacity: 0;
     transition: all 0.5s ease-in-out; white-space: nowrap; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center; gap: 0.5rem;
   }
   .title-item.active { top: 0; opacity: 1; }
   .title-item.prev { top: -150%; opacity: 0; }
+  .title-item .icon { width: 16px; height: 16px; }
+  
+  /* 애니메이션 타이틀 색상 변경 */
+  .top-bar.bg-yellow { background-color: #FFEB3B !important; }
+  .top-bar.bg-pink { background-color: #E91E63 !important; }
+  .top-bar.bg-black { background-color: #333 !important; }
+  .top-bar.bg-pink .title-item,
+  .top-bar.bg-black .title-item { color: #fff; }
+  .top-bar.bg-pink .title-item .icon path,
+  .top-bar.bg-black .title-item .icon path { fill: #fff; }
+
 
   .mobile-header {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 1rem 2rem; border-bottom: 1px solid #eee;
+    padding: 1rem 2rem; border-bottom: 1px solid #eee; background-color: #fff;
   }
   .mobile-header .brand-logo { font-size: 1.5rem; font-weight: bold; }
   .mobile-header .header-icons { display: flex; align-items: center; gap: 1rem; }
@@ -111,6 +146,20 @@
     text-decoration: none; font-size: 0.9rem;
   }
 
+  /* --- 스크롤 관련 스타일 --- */
+  .scroll-to-top-btn {
+    position: fixed; bottom: 2rem; right: 2rem;
+    width: 50px; height: 50px; background-color: rgba(0,0,0,0.7);
+    color: white; border: none; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 997;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  .scroll-to-top-btn.visible {
+    opacity: 1; visibility: visible;
+  }
+  
   /* --- 섹션 공통 스타일 --- */
   @media (min-width: 769px) {
     .interactive-section {
@@ -178,6 +227,13 @@
     h1, h2, .main-heading { font-size: 1.6rem !important; line-height: 1.5 !important; }
     .pc-header { display: none; }
     .mobile-header-wrapper { display: block; }
+    .mobile-header-wrapper.sticky {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 990;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
     .nav-bar {
       justify-content: flex-start; overflow-x: auto;
       -ms-overflow-style: none; scrollbar-width: none;
@@ -201,7 +257,18 @@
 <header class="pc-header">
   <div class="top-bar">
     <div class="container">
-      <div class="static-title">“건강을 지켜온 시간” 어느덧 27년. 마음과 건강을 채우는 한 잔, 수진선식입니다.</div>
+        <div class="title-rotator">
+            <span class="title-item">27년째 한결같이, 수진선식 입니다.</span>
+            <span class="title-item" data-color="yellow">
+                <svg class="icon" viewBox="0 0 24 24" fill="#3E2723"><path d="M12.51,2.02c-1.03-0.01-2.07,0.15-3.09,0.49c-0.54,0.18-1.07,0.4-1.58,0.66c-0.83,0.43-1.62,0.96-2.33,1.57 c-0.72,0.62-1.33,1.33-1.84,2.12c-0.44,0.69-0.81,1.43-1.1,2.2c-0.29,0.79-0.5,1.6-0.62,2.42c-0.12,0.8-0.15,1.6-0.15,2.4 c0,0.88,0.04,1.76,0.14,2.62c0.1,0.88,0.29,1.74,0.56,2.58c0.27,0.84,0.6,1.65,1,2.42c0.75,1.44,1.8,2.7,3.09,3.7 c0.6,0.46,1.25,0.86,1.93,1.19c0.7,0.32,1.42,0.57,2.16,0.75c1.4,0.34,2.83,0.47,4.25,0.32c0.88-0.09,1.75-0.27,2.59-0.53 c1.69-0.52,3.25-1.4,4.58-2.58c0.41-0.37,0.79-0.77,1.13-1.2c0.32-0.42,0.61-0.86,0.86-1.32c0.52-0.95,0.89-1.99,1.1-3.05 c0.11-0.52,0.18-1.05,0.22-1.58c0.04-0.55,0.05-1.1,0.05-1.65c0-1.7-0.31-3.39-0.91-4.99c-0.31-0.82-0.7-1.61-1.16-2.35 c-0.46-0.74-0.99-1.42-1.59-2.04c-0.84-0.86-1.83-1.57-2.92-2.09c-0.55-0.26-1.12-0.48-1.7-0.65 C14.58,2.18,13.55,2.03,12.51,2.02z M17.96,10.15c0.1,0.48,0.15,0.96,0.15,1.45c0,0.43-0.03,0.86-0.08,1.28 c-0.11,0.84-0.3,1.68-0.58,2.48c-0.27,0.8-0.63,1.56-1.06,2.28c-0.79,1.32-1.89,2.41-3.23,3.17c-0.6,0.33-1.25,0.59-1.92,0.76 c-1.28,0.33-2.6,0.43-3.9,0.28c-0.76-0.09-1.51-0.26-2.23-0.5c-0.73-0.24-1.43-0.56-2.09-0.96c-1.2-0.72-2.22-1.69-3.02-2.85 c-0.4-0.58-0.74-1.2-1.01-1.84c-0.27-0.64-0.48-1.3-0.62-1.97c-0.14-0.68-0.21-1.37-0.21-2.05c0-0.71,0.04-1.42,0.13-2.12 c0.1-0.7,0.26-1.4,0.5-2.07c0.23-0.67,0.53-1.32,0.88-1.94c0.67-1.17,1.59-2.2,2.7-3.02c0.55-0.4,1.14-0.74,1.75-1.01 c0.62-0.27,1.26-0.48,1.91-0.63c1.26-0.29,2.54-0.38,3.8-0.22c0.71,0.09,1.4,0.26,2.07,0.5c1.3,0.47,2.48,1.2,3.5,2.16 c0.51,0.48,0.97,1,1.37,1.56C17.44,8.55,17.75,9.34,17.96,10.15z"></path></svg>
+                카톡 채널추가하고 1,000원 할인!
+            </span>
+            <span class="title-item" data-color="pink">
+                <svg class="icon" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6a3.6 3.6 0 00-3.6-3.6H7.6zM12 6.8a5.2 5.2 0 110 10.4 5.2 5.2 0 010-10.4zM12 8.8a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zm4.6-2a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+                인스타그램 팔로우 추가하고 1,000원 할인!
+            </span>
+            <span class="title-item" data-color="black">감사한 마음을 담아, 프리미엄 답례품</span>
+        </div>
       <div class="login-form">
         <a href="#">로그인</a>
         <a href="#">회원가입</a>
@@ -210,7 +277,7 @@
     </div>
   </div>
   <nav class="nav-bar">
-    <a href="#">전체상품</a><a href="#">건강기능 선식</a><a href="#">영양 미숫가루</a><a href="#">전통 곡물가루</a><a href="#">온가족 건강차</a><a href="#">수제 마사지팩</a><a href="#">특가 & 행사상품</a><a href="#">리뷰 이벤트</a><a href="#">궁금해요 사장님!</a>
+    <a href="#">브랜드스토리</a><a href="#">베스트상품</a><a href="#">건강선식</a><a href="#">전통선식</a><a href="#">학생선식</a><a href="#">맞춤선식</a><a href="#">야채분말</a><a href="#">견과류분말</a><a href="#">수제 마사지팩</a><a href="#">고객 리뷰이벤트</a><a href="#">궁금해요 사장님!</a>
   </nav>
 </header>
 
@@ -218,10 +285,16 @@
 <header class="mobile-header-wrapper">
     <div class="top-bar">
       <div class="title-rotator">
-        <span class="title-item">“건강을 지켜온 시간” 어느덧 27년</span>
-        <span class="title-item">방앗간 아들이 고집스럽고 깐깐하게</span>
-        <span class="title-item">카카오 채널 추가하고 1,000원 할인!</span>
-        <span class="title-item">감사한 마음을 담아, 프리미엄 답례품</span>
+        <span class="title-item">27년째 한결같이, 수진선식 입니다.</span>
+        <span class="title-item" data-color="yellow">
+            <svg class="icon" viewBox="0 0 24 24" fill="#3E2723"><path d="M12.51,2.02c-1.03-0.01-2.07,0.15-3.09,0.49c-0.54,0.18-1.07,0.4-1.58,0.66c-0.83,0.43-1.62,0.96-2.33,1.57 c-0.72,0.62-1.33,1.33-1.84,2.12c-0.44,0.69-0.81,1.43-1.1,2.2c-0.29,0.79-0.5,1.6-0.62,2.42c-0.12,0.8-0.15,1.6-0.15,2.4 c0,0.88,0.04,1.76,0.14,2.62c0.1,0.88,0.29,1.74,0.56,2.58c0.27,0.84,0.6,1.65,1,2.42c0.75,1.44,1.8,2.7,3.09,3.7 c0.6,0.46,1.25,0.86,1.93,1.19c0.7,0.32,1.42,0.57,2.16,0.75c1.4,0.34,2.83,0.47,4.25,0.32c0.88-0.09,1.75-0.27,2.59-0.53 c1.69-0.52,3.25-1.4,4.58-2.58c0.41-0.37,0.79-0.77,1.13-1.2c0.32-0.42,0.61-0.86,0.86-1.32c0.52-0.95,0.89-1.99,1.1-3.05 c0.11-0.52,0.18-1.05,0.22-1.58c0.04-0.55,0.05-1.1,0.05-1.65c0-1.7-0.31-3.39-0.91-4.99c-0.31-0.82-0.7-1.61-1.16-2.35 c-0.46-0.74-0.99-1.42-1.59-2.04c-0.84-0.86-1.83-1.57-2.92-2.09c-0.55-0.26-1.12-0.48-1.7-0.65 C14.58,2.18,13.55,2.03,12.51,2.02z M17.96,10.15c0.1,0.48,0.15,0.96,0.15,1.45c0,0.43-0.03,0.86-0.08,1.28 c-0.11,0.84-0.3,1.68-0.58,2.48c-0.27,0.8-0.63,1.56-1.06,2.28c-0.79,1.32-1.89,2.41-3.23,3.17c-0.6,0.33-1.25,0.59-1.92,0.76 c-1.28,0.33-2.6,0.43-3.9,0.28c-0.76-0.09-1.51-0.26-2.23-0.5c-0.73-0.24-1.43-0.56-2.09-0.96c-1.2-0.72-2.22-1.69-3.02-2.85 c-0.4-0.58-0.74-1.2-1.01-1.84c-0.27-0.64-0.48-1.3-0.62-1.97c-0.14-0.68-0.21-1.37-0.21-2.05c0-0.71,0.04-1.42,0.13-2.12 c0.1-0.7,0.26-1.4,0.5-2.07c0.23-0.67,0.53-1.32,0.88-1.94c0.67-1.17,1.59-2.2,2.7-3.02c0.55-0.4,1.14-0.74,1.75-1.01 c0.62-0.27,1.26-0.48,1.91-0.63c1.26-0.29,2.54-0.38,3.8-0.22c0.71,0.09,1.4,0.26,2.07,0.5c1.3,0.47,2.48,1.2,3.5,2.16 c0.51,0.48,0.97,1,1.37,1.56C17.44,8.55,17.75,9.34,17.96,10.15z"></path></svg>
+            카톡 채널추가하고 1,000원 할인!
+        </span>
+        <span class="title-item" data-color="pink">
+            <svg class="icon" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8A3.6 3.6 0 007.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6a3.6 3.6 0 00-3.6-3.6H7.6zM12 6.8a5.2 5.2 0 110 10.4 5.2 5.2 0 010-10.4zM12 8.8a3.2 3.2 0 100 6.4 3.2 3.2 0 000-6.4zm4.6-2a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"/></svg>
+            인스타그램 팔로우 추가하고 1,000원 할인!
+        </span>
+        <span class="title-item" data-color="black">감사한 마음을 담아, 프리미엄 답례품</span>
       </div>
     </div>
     <div class="mobile-header">
@@ -241,7 +314,7 @@
       </div>
     </div>
     <nav class="nav-bar">
-      <a href="#">전체상품</a><a href="#">건강기능 선식</a><a href="#">영양 미숫가루</a><a href="#">전통 곡물가루</a><a href="#">온가족 건강차</a><a href="#">수제 마사지팩</a><a href="#">특가 & 행사상품</a><a href="#">리뷰 이벤트</a><a href="#">궁금해요 사장님!</a>
+      <a href="#">브랜드스토리</a><a href="#">베스트상품</a><a href="#">건강선식</a><a href="#">전통선식</a><a href="#">학생선식</a><a href="#">맞춤선식</a><a href="#">야채분말</a><a href="#">견과류분말</a><a href="#">수제 마사지팩</a><a href="#">고객 리뷰이벤트</a><a href="#">궁금해요 사장님!</a>
     </nav>
 </header>
 
@@ -270,8 +343,6 @@
       </a>
     </div>
     <ul class="side-nav-menu">
-            <li><a href="#">김슬기얼굴</a></li>
-      <li><a href="#">김슬기안씻음</a></li>
       <li><a href="#">브랜드스토리</a></li>
       <li><a href="#">베스트상품</a></li>
       <li><a href="#">건강선식</a></li>
@@ -406,26 +477,49 @@
   </div>
 </footer>
 
+<!-- 맨 위로 가기 버튼 -->
+<button id="scroll-to-top-btn" class="scroll-to-top-btn">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
+
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // 타이틀 애니메이션
-    const rotator = document.querySelector('.title-rotator');
-    if (rotator) {
-      const titles = rotator.querySelectorAll('.title-item');
-      if (titles.length > 0) {
-        let currentIndex = 0;
-        titles[0].classList.add('active');
-        setInterval(() => {
-          const prevIndex = currentIndex;
-          currentIndex = (currentIndex + 1) % titles.length;
-          titles[prevIndex].classList.remove('active');
-          titles[prevIndex].classList.add('prev');
-          titles[currentIndex].classList.remove('prev');
-          titles[currentIndex].classList.add('active');
-          setTimeout(() => { titles[prevIndex].classList.remove('prev'); }, 500);
-        }, 3000);
-      }
-    }
+    const rotators = document.querySelectorAll('.title-rotator');
+    rotators.forEach(rotator => {
+        const topBar = rotator.closest('.top-bar');
+        const titles = rotator.querySelectorAll('.title-item');
+        if (titles.length > 0) {
+            let currentIndex = 0;
+            titles[0].classList.add('active');
+            
+            setInterval(() => {
+                const prevIndex = currentIndex;
+                currentIndex = (currentIndex + 1) % titles.length;
+
+                titles[prevIndex].classList.remove('active');
+                titles[prevIndex].classList.add('prev');
+                titles[currentIndex].classList.remove('prev');
+                titles[currentIndex].classList.add('active');
+                
+                setTimeout(() => { titles[prevIndex].classList.remove('prev'); }, 500);
+
+                const currentColor = titles[currentIndex].dataset.color;
+                if (topBar) {
+                    topBar.classList.remove('bg-yellow', 'bg-pink', 'bg-black');
+                    if (currentColor === 'yellow') {
+                        topBar.classList.add('bg-yellow');
+                    } else if (currentColor === 'pink') {
+                        topBar.classList.add('bg-pink');
+                    } else if (currentColor === 'black') {
+                        topBar.classList.add('bg-black');
+                    }
+                }
+            }, 3000);
+        }
+    });
 
     // 모바일 메뉴 및 검색 기능
     const menuBtn = document.getElementById('menu-btn');
@@ -461,6 +555,36 @@
     if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
     if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
     if (backdrop) backdrop.addEventListener('click', closeMenu);
+
+    // 스크롤 기능
+    const mobileHeaderWrapper = document.querySelector('.mobile-header-wrapper');
+    const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
+    
+    window.addEventListener('scroll', function() {
+      if (window.innerWidth <= 768) {
+        if (mobileHeaderWrapper) {
+          if (window.scrollY > 0) {
+            mobileHeaderWrapper.classList.add('sticky');
+          } else {
+            mobileHeaderWrapper.classList.remove('sticky');
+          }
+        }
+        
+        if (scrollToTopBtn) {
+          if (window.scrollY > 200) {
+            scrollToTopBtn.classList.add('visible');
+          } else {
+            scrollToTopBtn.classList.remove('visible');
+          }
+        }
+      }
+    });
+
+    if (scrollToTopBtn) {
+      scrollToTopBtn.addEventListener('click', function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   });
 </script>
 
