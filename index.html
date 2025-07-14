@@ -62,13 +62,15 @@
     font-weight: bold;
   }
 
-  /* 모든 섹션에 적용될 호버 효과 */
-  .interactive-section {
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  }
-  .interactive-section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  /* 모든 섹션에 적용될 호버 효과 (PC에서만) */
+  @media (min-width: 769px) {
+    .interactive-section {
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    .interactive-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
   }
 
   /* 메인 배너 */
@@ -341,6 +343,7 @@
     border-top: 1px solid #ddd;
     padding-top: 1rem;
     margin-top: 1rem;
+    text-align: left;
   }
 
   /* 반응형 웹 디자인을 위한 미디어 쿼리 */
