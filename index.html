@@ -13,109 +13,105 @@
     background: #fff;
     overflow-x: hidden;
   }
-
-  /* 최상단 안내 및 로그인 바 */
-  .top-bar {
-    background: #e5d3b3;
-    padding: 1rem 0;
-    border-bottom: 1px solid #ddd;
-  }
-  .top-bar .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
-    font-size: 0.9rem;
-    box-sizing: border-box;
-  }
-  .login-form a {
-    margin-left: 1rem;
-    text-decoration: none;
-    color: #8b5e3c;
-    font-weight: bold;
-  }
-  .login-form a:hover {
-    text-decoration: underline;
-  }
-
-  /* 타이틀 애니메이션 스타일 */
-  .title-rotator {
-    position: relative;
-    height: 1.5em; /* 한 줄 텍스트 높이에 맞춤 */
+  body.no-scroll {
     overflow: hidden;
-    display: none; /* 기본적으로 숨김 */
-    flex-grow: 1; /* 모바일에서 공간 차지 */
-  }
-  .title-item {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    top: 150%; /* 아래에서 시작 */
-    opacity: 0;
-    transition: all 0.5s ease-in-out;
-    white-space: nowrap;
-    text-align: center;
-  }
-  .title-item.active {
-    top: 0; /* 중앙으로 이동 */
-    opacity: 1;
-  }
-  .title-item.prev {
-    top: -150%; /* 위로 사라짐 */
-    opacity: 0;
   }
 
-  /* 모바일 헤더 (로고, 아이콘) */
+  /* --- 헤더 스타일 --- */
+  .pc-header .top-bar {
+    background: #e5d3b3; padding: 1rem 0; border-bottom: 1px solid #ddd;
+  }
+  .pc-header .top-bar .container {
+    max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between;
+    align-items: center; padding: 0 2rem; font-size: 0.9rem; box-sizing: border-box;
+  }
+  .pc-header .login-form a {
+    margin-left: 1rem; text-decoration: none; color: #8b5e3c; font-weight: bold;
+  }
+  .pc-header .login-form a:hover { text-decoration: underline; }
+
+  .mobile-header-wrapper { display: none; }
+
+  .mobile-header-wrapper .top-bar {
+    background: #e5d3b3; padding: 0.8rem 1rem; text-align: center;
+  }
+  .title-rotator { position: relative; height: 1.2em; overflow: hidden; }
+  .title-item {
+    position: absolute; width: 100%; left: 0; top: 150%; opacity: 0;
+    transition: all 0.5s ease-in-out; white-space: nowrap; font-size: 0.9rem;
+  }
+  .title-item.active { top: 0; opacity: 1; }
+  .title-item.prev { top: -150%; opacity: 0; }
+
   .mobile-header {
-    display: none; /* PC에서는 숨김 */
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2rem; border-bottom: 1px solid #eee;
+  }
+  .mobile-header .brand-logo { font-size: 1.5rem; font-weight: bold; }
+  .mobile-header .header-icons { display: flex; align-items: center; gap: 1rem; }
+  .mobile-header .icon { width: 24px; height: 24px; stroke: #333; stroke-width: 2; cursor: pointer; }
+
+  .nav-bar {
+    max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between;
+    align-items: center; background: #fff; padding: 1rem 2rem;
+    font-size: 0.95rem; box-sizing: border-box; border-bottom: 1px solid #f0f0f0;
+  }
+  .nav-bar a { text-decoration: none; color: #333; padding: 0.5rem; flex-shrink: 0; }
+  .nav-bar a:hover { color: #8b5e3c; font-weight: bold; }
+  
+  /* --- 오버레이 및 사이드 메뉴 스타일 --- */
+  .overlay-backdrop {
+    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5); z-index: 998;
+  }
+  .overlay-backdrop.active { display: block; }
+
+  .side-nav {
+    position: fixed; top: 0; left: 0; width: 85%; max-width: 320px; height: 100%;
+    background-color: #fff; z-index: 999; transform: translateX(-100%);
+    transition: transform 0.3s ease-out; overflow-y: auto;
+  }
+  .side-nav.open { transform: translateX(0); }
+  .side-nav-header {
+    display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.5rem;
     border-bottom: 1px solid #eee;
   }
-  .mobile-header .brand-logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+  .side-nav-header .login-links a { margin-right: 1rem; text-decoration: none; color: #333; font-weight: bold; }
+  .side-nav-header .close-btn { font-size: 2rem; cursor: pointer; line-height: 1; }
+  .side-nav-content { padding: 1.5rem; }
+  .side-nav-icons { display: flex; justify-content: space-around; text-align: center; padding-bottom: 1.5rem; border-bottom: 1px solid #eee; }
+  .side-nav-icons a { text-decoration: none; color: #555; }
+  .side-nav-icons .icon { margin: 0 auto 0.5rem auto; width: 28px; height: 28px; }
+  .side-nav-menu { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .side-nav-menu li { padding: 1rem 0; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid #f5f5f5; }
+  .side-nav-menu a { text-decoration: none; color: #333; }
+
+  .search-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #fff; z-index: 1000;
+    transform: translateY(100%); opacity: 0;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   }
-  .mobile-header .header-icons {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+  .search-overlay.open { transform: translateY(0); opacity: 1; }
+  .search-header { display: flex; align-items: center; padding: 0.8rem 1rem; border-bottom: 1px solid #eee; }
+  .search-header .back-btn { font-size: 2rem; cursor: pointer; line-height: 1; transform: scaleX(0.7); }
+  .search-header-title { flex-grow: 1; text-align: center; font-size: 1.1rem; font-weight: bold; }
+  .search-header .search-icon { width: 24px; height: 24px; }
+  .search-content { padding: 1.5rem; }
+  .search-tabs { display: flex; border-bottom: 1px solid #ddd; }
+  .search-tabs button {
+    flex: 1; padding: 1rem; border: none; background: none; font-size: 1rem;
+    cursor: pointer; color: #888; border-bottom: 2px solid transparent;
   }
-  .mobile-header .icon {
-    width: 24px;
-    height: 24px;
-    stroke: #333;
-    stroke-width: 2;
+  .search-tabs button.active { color: #333; font-weight: bold; border-bottom-color: #333; }
+  .keywords { padding: 1.5rem 0; }
+  .keywords a {
+    display: inline-block; background-color: #f5f5f5; color: #555;
+    padding: 0.5rem 1rem; border-radius: 20px; margin: 0.5rem 0.5rem 0.5rem 0;
+    text-decoration: none; font-size: 0.9rem;
   }
 
-  /* 카테고리 내비게이션 바 */
-  .nav-bar {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #fff;
-    padding: 1rem 2rem;
-    font-size: 0.95rem;
-    box-sizing: border-box;
-    border-bottom: 1px solid #f0f0f0;
-  }
-  .nav-bar a {
-    text-decoration: none;
-    color: #333;
-    padding: 0.5rem;
-    flex-shrink: 0; 
-  }
-  .nav-bar a:hover {
-    color: #8b5e3c;
-    font-weight: bold;
-  }
-
-  /* 모든 섹션에 적용될 호버 효과 (PC에서만) */
+  /* --- 섹션 공통 스타일 --- */
   @media (min-width: 769px) {
     .interactive-section {
       transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
@@ -126,401 +122,192 @@
     }
   }
 
-  /* 메인 배너 */
-  .main-banner {
-    background: #efebe3;
-    padding: 2rem 0;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .main-banner .inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
-    width: 100%;
-  }
-  .main-banner .text {
-    flex: 1;
-    min-width: 300px;
-  }
-  .main-banner .text h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1rem;
-  }
-  .main-banner .text p {
-    font-size: 1rem;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-  .main-banner .text a {
-    background: none;
-    border: 1px solid #333;
-    padding: 0.6rem 1.2rem;
-    margin-right: 0.8rem;
-    cursor: pointer;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-  }
-  .main-banner .text a:hover {
-    background: #8b5e3c;
-    color: #fff;
-    border-color: #8b5e3c;
-  }
-  .main-banner .image {
-    flex: 1;
-    text-align: right;
-  }
-  .main-banner img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
+  /* --- 각 섹션 스타일 (생략) --- */
+  .main-banner { background: #efebe3; padding: 2rem 0; min-height: 300px; display: flex; align-items: center; justify-content: center; }
+  .main-banner .inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: 3rem; width: 100%; }
+  .main-banner .text h2 { font-size: 2.2rem; margin-bottom: 1rem; }
+  .main-banner .text p { font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+  .main-banner .text a { background: none; border: 1px solid #333; padding: 0.6rem 1.2rem; margin-right: 0.8rem; cursor: pointer; font-weight: bold; text-decoration: none; color: #333; }
+  .main-banner .text a:hover { background: #8b5e3c; color: #fff; border-color: #8b5e3c; }
+  .main-banner .image { flex: 1; text-align: right; }
+  .main-banner img { max-width: 100%; height: auto; border-radius: 8px; }
 
-  /* 히어로 섹션 */
-  .hero {
-    background: #000 url('pic.png') no-repeat center center;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    padding: 2.5rem 2rem;
-    box-sizing: border-box;
-  }
-  .hero::before {
-    content: "";
-    position: absolute;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.6);
-  }
-  .hero > div {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-    color: #fff;
-  }
-  .hero .main-heading {
-    font-size: 2.4rem;
-    line-height: 1.5;
-    font-weight: bold;
-    margin: 0 auto 2.5rem auto;
-    max-width: 700px;
-  }
-  .product-highlights {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin: 2rem 0;
-    text-align: left;
-  }
-  .highlight-item {
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: 1.5rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
-  .highlight-item strong {
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-  .hero-buttons {
-    margin-top: 2.5rem;
-    margin-bottom: 2.5rem;
-  }
-  .hero .btn {
-    display: inline-block;
-    padding: 0.8rem 1.8rem;
-    text-decoration: none;
-    border-radius: 5px;
-    margin: 0 0.5rem;
-    font-weight: bold;
-    transition: all 0.3s;
-  }
-  .hero .btn-dark {
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid #fff;
-  }
-  .hero .btn-dark:hover {
-      background-color: #fff;
-      color: #333;
-  }
+  .catalog-section { max-width: 1200px; margin: 3rem auto; padding: 2rem; box-sizing: border-box; min-height: 420px; display: flex; align-items: center; gap: 2rem; }
+  .catalog-text { flex: 1; }
+  .catalog-text h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+  .catalog-text h3 { font-size: 1.2rem; margin-top: 1rem; }
+  .catalog-text p { font-size: 0.95rem; line-height: 1.6; margin-top: 0.5rem; }
+  .catalog-image { flex: 1; }
+  .catalog-image img { width: 100%; border-radius: 8px; }
+
+  .hero { background: #000 url('pic.png') no-repeat center center; background-size: cover; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; padding: 2.5rem 2rem; box-sizing: border-box; }
+  .hero::before { content: ""; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.6); }
+  .hero > div { position: relative; z-index: 1; max-width: 800px; color: #fff; }
+  .hero .main-heading { font-size: 2.4rem; line-height: 1.5; font-weight: bold; margin: 0 auto 2.5rem auto; max-width: 700px; }
+  .product-highlights { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin: 2rem 0; text-align: left; }
+  .highlight-item { border: 1px solid rgba(255, 255, 255, 0.4); padding: 1.5rem; border-radius: 8px; font-size: 0.9rem; line-height: 1.5; }
+  .highlight-item strong { font-size: 1.1rem; margin-bottom: 0.5rem; display: block; }
+  .hero-buttons { margin-top: 2.5rem; margin-bottom: 2.5rem; }
+  .hero .btn { display: inline-block; padding: 0.8rem 1.8rem; text-decoration: none; border-radius: 5px; margin: 0 0.5rem; font-weight: bold; transition: all 0.3s; }
+  .hero .btn-dark { background-color: transparent; color: #fff; border: 1px solid #fff; }
+  .hero .btn-dark:hover { background-color: #fff; color: #333; }
   
-  /* 제품 섹션 */
-  .products {
-    background: #000 url('pic3.png') no-repeat center center;
-    background-size: cover;
-    text-align: center;
-    min-height: 350px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: #fff;
-    padding: 2rem;
-    box-sizing: border-box;
-  }
-  .products::before {
-    content: "";
-    position: absolute;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
-  }
-  .products > div {
-    position: relative;
-    z-index: 1;
-    max-width: 800px;
-  }
-  .products h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  .products p {
-    line-height: 1.6;
-  }
+  .feature-section { padding: 4rem 2rem; background-color: #efebe3; text-align: center; }
+  .feature-section .container { max-width: 1200px; margin: 0 auto; padding: 0; box-sizing: border-box; }
+  .feature-section h2 { font-size: 2.2rem; margin-bottom: 3rem; }
+  .feature-grid { display: flex; justify-content: space-around; gap: 2rem; }
+  .feature-item { flex: 1; min-width: 280px; max-width: 350px; }
+  .feature-item .icon { width: 50px; height: 50px; margin: 0 auto 1rem auto; stroke: #333; stroke-width: 1; }
+  .feature-item h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+  .feature-item p { font-size: 0.95rem; line-height: 1.7; color: #555; }
 
-  /* 카탈로그 섹션 */
-  .catalog-section {
-    max-width: 1200px;
-    margin: 3rem auto;
-    padding: 2rem;
-    box-sizing: border-box;
-    min-height: 420px;
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-  }
-  .catalog-text {
-    flex: 1;
-  }
-  .catalog-text h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-  .catalog-text h3 {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-  }
-  .catalog-text p {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin-top: 0.5rem;
-  }
-  .catalog-image {
-    flex: 1;
-  }
-  .catalog-image img {
-    width: 100%;
-    border-radius: 8px;
-  }
+  .products { background: #000 url('pic3.png') no-repeat center center; background-size: cover; text-align: center; min-height: 350px; display: flex; align-items: center; justify-content: center; position: relative; color: #fff; padding: 2rem; box-sizing: border-box; }
+  .products::before { content: ""; position: absolute; top:0; left:0; right:0; bottom:0; background: rgba(0,0,0,0.5); }
+  .products > div { position: relative; z-index: 1; max-width: 800px; }
+  .products h2 { font-size: 1.8rem; margin-bottom: 1rem; }
+  .products p { line-height: 1.6; }
 
-  /* 특징 섹션 */
-  .feature-section {
-    padding: 4rem 2rem;
-    background-color: #efebe3;
-    text-align: center;
-  }
-  .feature-section .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .feature-section h2 {
-    font-size: 2.2rem;
-    margin-bottom: 3rem;
-  }
-  .feature-grid {
-    display: flex;
-    justify-content: space-around;
-    gap: 2rem;
-  }
-  .feature-item {
-    flex: 1;
-    min-width: 280px;
-    max-width: 350px;
-  }
-  .feature-item .icon {
-    width: 50px;
-    height: 50px;
-    margin: 0 auto 1rem auto;
-    stroke: #333;
-    stroke-width: 1;
-  }
-  .feature-item h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-  .feature-item p {
-    font-size: 0.95rem;
-    line-height: 1.7;
-    color: #555;
-  }
+  footer { background: #fff; color: #666; padding: 2rem 0; font-size: 0.8rem; margin-top: 2rem; }
+  footer .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; box-sizing: border-box; }
+  .footer-grid { display: flex; flex-wrap: wrap; justify-content: space-between; }
+  .footer-col { flex: 1; min-width: 200px; margin-bottom: 1.5rem; }
+  .footer-bottom { border-top: 1px solid #ddd; padding-top: 1rem; margin-top: 1rem; text-align: left; }
 
-  /* 푸터 */
-  footer {
-    background: #fff;
-    color: #666;
-    padding: 2rem 0;
-    font-size: 0.8rem;
-    margin-top: 2rem;
-  }
-  footer .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    box-sizing: border-box;
-  }
-  .footer-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  .footer-col {
-    flex: 1;
-    min-width: 200px;
-    margin-bottom: 1.5rem;
-  }
-  .footer-bottom {
-    border-top: 1px solid #ddd;
-    padding-top: 1rem;
-    margin-top: 1rem;
-    text-align: left;
-  }
-
-  /* 반응형 웹 디자인을 위한 미디어 쿼리 (수정) */
+  /* 반응형 웹 디자인 */
   @media (max-width: 768px) {
-    h1, h2, .main-heading {
-      font-size: 1.6rem !important;
-      line-height: 1.5 !important;
-    }
-
-    .top-bar .container {
-      flex-direction: column;
-      gap: 0.8rem;
-      text-align: center;
-    }
-    .top-bar .static-title,
-    .top-bar .login-form {
-        display: none;
-    }
-    .top-bar .title-rotator {
-        display: block;
-    }
-    
-    .pc-header {
-        display: none;
-    }
-    .mobile-header {
-        display: flex;
-    }
-
+    h1, h2, .main-heading { font-size: 1.6rem !important; line-height: 1.5 !important; }
+    .pc-header { display: none; }
+    .mobile-header-wrapper { display: block; }
     .nav-bar {
-      justify-content: flex-start;
-      overflow-x: auto;
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-      padding: 0.5rem 1rem; /* 패딩 조정 */
-      border-bottom: 1px solid #eee;
+      justify-content: flex-start; overflow-x: auto;
+      -ms-overflow-style: none; scrollbar-width: none;
+      padding: 0.5rem 1rem; border-bottom: 1px solid #eee;
     }
-    .nav-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .main-banner .inner,
-    .catalog-section {
-      flex-direction: column;
-      text-align: center;
-      gap: 2rem;
-    }
-    .catalog-section {
-        min-height: auto;
-    }
-
-    .hero .product-highlights {
-      grid-template-columns: 1fr;
-    }
-
-    .feature-grid {
-      flex-direction: column;
-      align-items: center;
-    }
-    
-    .footer-grid {
-      flex-direction: column;
-      text-align: center;
-    }
-    .footer-col {
-      margin-bottom: 2rem;
-    }
-    .footer-bottom {
-        text-align: center;
-    }
+    .nav-bar::-webkit-scrollbar { display: none; }
+    .main-banner .inner, .catalog-section { flex-direction: column; text-align: center; gap: 2rem; }
+    .catalog-section { min-height: auto; }
+    .hero .product-highlights { grid-template-columns: 1fr; }
+    .feature-grid { flex-direction: column; align-items: center; }
+    .footer-grid { flex-direction: column; text-align: center; }
+    .footer-col { margin-bottom: 2rem; }
+    .footer-bottom { text-align: center; }
   }
 
 </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <div class="container">
-    <div class="static-title">“건강을 지켜온 시간” 어느덧 27년. 마음과 건강을 채우는 한 잔, 수진선식입니다.</div>
-    <div class="title-rotator">
-      <span class="title-item">“건강을 지켜온 시간” 어느덧 27년</span>
-      <span class="title-item">방앗간 아들이 고집스럽고 깐깐하게</span>
-      <span class="title-item">카카오 채널 추가하고 1,000원 할인!</span>
-      <span class="title-item">감사한 마음을 담아, 프리미엄 답례품</span>
+<!-- PC 전용 헤더 -->
+<header class="pc-header">
+  <div class="top-bar">
+    <div class="container">
+      <div class="static-title">“건강을 지켜온 시간” 어느덧 27년. 마음과 건강을 채우는 한 잔, 수진선식입니다.</div>
+      <div class="login-form">
+        <a href="#">로그인</a>
+        <a href="#">회원가입</a>
+        <a href="#">주문조회</a>
+      </div>
     </div>
-    <div class="login-form">
-      <a href="#">로그인</a>
-      <a href="#">회원가입</a>
-      <a href="#">주문조회</a>
+  </div>
+  <nav class="nav-bar">
+    <a href="#">전체상품</a><a href="#">건강기능 선식</a><a href="#">영양 미숫가루</a><a href="#">전통 곡물가루</a><a href="#">온가족 건강차</a><a href="#">수제 마사지팩</a><a href="#">특가 & 행사상품</a><a href="#">리뷰 이벤트</a><a href="#">궁금해요 사장님!</a>
+  </nav>
+</header>
+
+<!-- 모바일 전용 헤더 -->
+<header class="mobile-header-wrapper">
+    <div class="top-bar">
+      <div class="title-rotator">
+        <span class="title-item">“건강을 지켜온 시간” 어느덧 27년</span>
+        <span class="title-item">방앗간 아들이 고집스럽고 깐깐하게</span>
+        <span class="title-item">카카오 채널 추가하고 1,000원 할인!</span>
+        <span class="title-item">감사한 마음을 담아, 프리미엄 답례품</span>
+      </div>
+    </div>
+    <div class="mobile-header">
+      <div class="header-icons">
+        <svg id="menu-btn" class="icon menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </div>
+      <div class="brand-logo">수진선식</div>
+      <div class="header-icons">
+        <svg id="search-btn" class="icon search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <svg class="icon cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <a href="#">전체상품</a><a href="#">건강기능 선식</a><a href="#">영양 미숫가루</a><a href="#">전통 곡물가루</a><a href="#">온가족 건강차</a><a href="#">수제 마사지팩</a><a href="#">특가 & 행사상품</a><a href="#">리뷰 이벤트</a><a href="#">궁금해요 사장님!</a>
+    </nav>
+</header>
+
+<!-- 사이드 메뉴 (숨겨짐) -->
+<div id="overlay-backdrop" class="overlay-backdrop"></div>
+<aside id="side-menu" class="side-nav">
+  <div class="side-nav-header">
+    <div class="login-links">
+      <a href="#">로그인</a> | <a href="#">회원가입</a>
+    </div>
+    <span id="close-menu-btn" class="close-btn">&times;</span>
+  </div>
+  <div class="side-nav-content">
+    <div class="side-nav-icons">
+      <a href="#">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 12.318a4.5 4.5 0 000 6.364L12 21l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.272l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+        <div>관심상품</div>
+      </a>
+      <a href="#">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>최근본상품</div>
+      </a>
+      <a href="#">
+        <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+        <div>주문조회</div>
+      </a>
+    </div>
+    <ul class="side-nav-menu">
+      <li><a href="#">브랜드스토리</a></li>
+      <li><a href="#">베스트</a></li>
+      <li><a href="#">전체상품</a></li>
+      <li><a href="#">야채 분말</a></li>
+      <li><a href="#">선물/답례품</a></li>
+      <li><a href="#">리뷰</a></li>
+      <li><a href="#">가입혜택</a></li>
+      <li><a href="#">커뮤니티</a></li>
+    </ul>
+  </div>
+</aside>
+
+<!-- 검색 오버레이 (숨겨짐) -->
+<div id="search-overlay" class="search-overlay">
+  <div class="search-header">
+    <span id="close-search-btn" class="back-btn">&larr;</span>
+    <h3 class="search-header-title">신규가입하고 혜택 받기!</h3>
+    <svg class="icon search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  </div>
+  <div class="search-content">
+    <div class="search-tabs">
+      <button class="active">인기 검색어</button>
+      <button>최근 검색어</button>
+    </div>
+    <div class="keywords">
+      <a href="#">#식단추천</a>
+      <a href="#">#미숫가루</a>
+      <a href="#">#시리얼</a>
+      <a href="#">#옛날보리</a>
+      <a href="#">#쑥가루</a>
     </div>
   </div>
 </div>
 
-<!-- 모바일 전용 헤더 -->
-<header class="mobile-header">
-  <div class="header-icons">
-    <svg class="icon menu-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-    </svg>
-  </div>
-  <div class="brand-logo">수진선식</div>
-  <div class="header-icons">
-    <svg class="icon search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-    </svg>
-    <svg class="icon cart-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-    </svg>
-  </div>
-</header>
 
-<!-- 카테고리 네비게이션 -->
-<nav class="nav-bar">
-  <a href="#">전체상품</a>
-  <a href="#">건강기능 선식</a>
-  <a href="#">영양 미숫가루</a>
-  <a href="#">전통 곡물가루</a>
-  <a href="#">온가족 건강차</a>
-  <a href="#">수제 마사지팩</a>
-  <a href="#">특가 & 행사상품</a>
-  <a href="#">리뷰 이벤트</a>
-  <a href="#">궁금해요 사장님!</a>
-</nav>
-
+<!-- 페이지 나머지 콘텐츠 (생략) -->
 <section class="main-banner interactive-section">
   <div class="inner">
     <div class="text">
@@ -553,29 +340,13 @@
 <section class="hero interactive-section">
   <div>
     <h2 class="main-heading">27년 정성으로 빚어낸<br>맛과 영양을 담은 건강 선식</h2>
-    
     <div class="product-highlights">
-      <div class="highlight-item">
-        <strong>영양가득 야채 당뇨선식</strong>
-        27년간 변함없이 사랑받아온, 수진선식의 자부심입니다.
-      </div>
-      <div class="highlight-item">
-        <strong>카무트효소 다이어트선식</strong>
-        카무트효소, 시서스, 마테와 고소한 곡물들의 영양소를 한 번에!
-      </div>
-      <div class="highlight-item">
-        <strong>탈모 관리 및 예방 선식</strong>
-        건강한 모발을 위한 맥주효모와 검은콩이 가득 들어간 맞춤형 선식!
-      </div>
-      <div class="highlight-item">
-        <strong>기타 맞춤형 영양선식</strong>
-        당신의 체질과 건강 상태, 입맛까지 세심히 살펴 하나하나 정성으로 빚어내는 맞춤 선식.
-      </div>
+      <div class="highlight-item"><strong>영양가득 야채 당뇨선식</strong>27년간 변함없이 사랑받아온, 수진선식의 자부심입니다.</div>
+      <div class="highlight-item"><strong>카무트효소 다이어트선식</strong>카무트효소, 시서스, 마테와 고소한 곡물들의 영양소를 한 번에!</div>
+      <div class="highlight-item"><strong>탈모 관리 및 예방 선식</strong>건강한 모발을 위한 맥주효모와 검은콩이 가득 들어간 맞춤형 선식!</div>
+      <div class="highlight-item"><strong>기타 맞춤형 영양선식</strong>당신의 체질과 건강 상태, 입맛까지 세심히 살펴 하나하나 정성으로 빚어내는 맞춤 선식.</div>
     </div>
-    
-    <div class="hero-buttons">
-        <a href="#" class="btn btn-dark">제품 더 보기</a>
-    </div>
+    <div class="hero-buttons"><a href="#" class="btn btn-dark">제품 더 보기</a></div>
   </div>
 </section>
 
@@ -584,23 +355,17 @@
       <h2>자연 원료 효소곡물가루의 특별함</h2>
       <div class="feature-grid">
         <div class="feature-item">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L4.5 16.5L6.75 18L9 16.5L11.25 18L13.5 16.5L15.75 18L18 16.5L20.25 18L21.75 15.75V9.75C21.75 9.33579 21.4142 9 21 9H3C2.58579 9 2.25 9.33579 2.25 9.75V15.75L2.25 18Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75L21.75 12.75"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V5.25C9 4.42157 8.32843 3.75 7.5 3.75C6.67157 3.75 6 4.42157 6 5.25V9"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 9V6C15 4.89543 14.1046 4 13 4C11.8954 4 11 4.89543 11 6V9"></path><path stroke-linecap="round" stroke-linejoin="round" d="M18 9V6.75C18 5.7835 17.2165 5 16.25 5C15.2835 5 14.5 5.7835 14.5 6.75V9"></path>
-          </svg>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L4.5 16.5L6.75 18L9 16.5L11.25 18L13.5 16.5L15.75 18L18 16.5L20.25 18L21.75 15.75V9.75C21.75 9.33579 21.4142 9 21 9H3C2.58579 9 2.25 9.33579 2.25 9.75V15.75L2.25 18Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75L21.75 12.75"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V5.25C9 4.42157 8.32843 3.75 7.5 3.75C6.67157 3.75 6 4.42157 6 5.25V9"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 9V6C15 4.89543 14.1046 4 13 4C11.8954 4 11 4.89543 11 6V9"></path><path stroke-linecap="round" stroke-linejoin="round" d="M18 9V6.75C18 5.7835 17.2165 5 16.25 5C15.2835 5 14.5 5.7835 14.5 6.75V9"></path></svg>
           <h3>엄선된 자연 원료</h3>
           <p>국내산 현미, 보리, 콩 등 엄선된 곡물만을 사용합니다.</p>
         </div>
         <div class="feature-item">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21,12c0,4.97-4.03,9-9,9c-1.89,0-3.64-0.58-5.04-1.59 C6.58,19.82,6,21,6,21s-1.18-0.42-1.59-1.04C3.58,18.64,3,16.89,3,15c0-4.97,4.03-9,9-9S21,7.03,21,12z" />
-          </svg>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21,12c0,4.97-4.03,9-9,9c-1.89,0-3.64-0.58-5.04-1.59 C6.58,19.82,6,21,6,21s-1.18-0.42-1.59-1.04C3.58,18.64,3,16.89,3,15c0-4.97,4.03-9,9-9S21,7.03,21,12z" /></svg>
           <h3>특별한 효소 블렌딩</h3>
           <p>30년간 연구해온 독자적인 효소 제조법으로 소화흡수를 돕습니다.</p>
         </div>
         <div class="feature-item">
-          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.31802 12.318C2.55971 10.5597 2.55971 7.44029 4.31802 5.68198C6.07633 3.92367 9.19571 3.92367 10.954 5.68198L12 6.72798L13.046 5.68198C14.8043 3.92367 17.9237 3.92367 19.682 5.68198C21.4403 7.44029 21.4403 10.5597 19.682 12.318L12 19.9999L4.31802 12.318Z"></path>
-          </svg>
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.31802 12.318C2.55971 10.5597 2.55971 7.44029 4.31802 5.68198C6.07633 3.92367 9.19571 3.92367 10.954 5.68198L12 6.72798L13.046 5.68198C14.8043 3.92367 17.9237 3.92367 19.682 5.68198C21.4403 7.44029 21.4403 10.5597 19.682 12.318L12 19.9999L4.31802 12.318Z"></path></svg>
           <h3>개인 맞춤 건강관리</h3>
           <p>고객 한 분 한 분의 건강 상태를 고려한 맞춤형 배합을 제공합니다.</p>
         </div>
@@ -611,14 +376,8 @@
 <section class="products interactive-section">
   <div>
     <h2>국내산 검은콩 <strong style="color:#ffda99;">70% 이상</strong>,<br>비교를 거부하는 진짜 검은콩선식</h2>
-    <p>
-      타협 없는 영양과 깊은 고소함을 선물합니다.<br>
-      흉내만 낸 선식과는 비교조차 하지 마세요.
-    </p>
-    <p style="margin-top:1.5rem; font-weight:bold;">
-      정성으로 쪄내고 고소함을 살린 로스팅.<br>
-      식탁에 품격을 더하세요.
-    </p>
+    <p>타협 없는 영양과 깊은 고소함을 선물합니다.<br>흉내만 낸 선식과는 비교조차 하지 마세요.</p>
+    <p style="margin-top:1.5rem; font-weight:bold;">정성으로 쪄내고 고소함을 살린 로스팅.<br>식탁에 품격을 더하세요.</p>
   </div>
 </section>
 
@@ -626,30 +385,17 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
-        <strong>수진선식(주)</strong><br/>
-        사업자등록번호 123-45-67890<br/>
-        통신판매업신고 2025-부산부전-0001<br/>
-        대표자: 홍길동<br/>
-        부산 부산진구 중앙대로 123 부전시장 내<br/>
-        고객센터: 051-123-4567<br/>
-        sujin@sansik.com
+        <strong>수진선식(주)</strong><br/>사업자등록번호 123-45-67890<br/>통신판매업신고 2025-부산부전-0001<br/>대표자: 홍길동<br/>부산 부산진구 중앙대로 123 부전시장 내<br/>고객센터: 051-123-4567<br/>sujin@sansik.com
       </div>
       <div class="footer-col">
-        <strong>고객센터</strong><br/>
-        월~금 09:00~18:00 (점심 12:00~13:00)<br/>
-        토/일/공휴일 휴무<br/>
-        1:1 문의 바로가기
+        <strong>고객센터</strong><br/>월~금 09:00~18:00 (점심 12:00~13:00)<br/>토/일/공휴일 휴무<br/>1:1 문의 바로가기
       </div>
       <div class="footer-col">
-        <strong>전자상거래 분쟁처리</strong><br/>
-        051-123-4567<br/>
-        1:1 문의 바로가기
+        <strong>전자상거래 분쟁처리</strong><br/>051-123-4567<br/>1:1 문의 바로가기
       </div>
     </div>
     <div class="footer-bottom">
-      <a href="#">이용약관</a>
-      <a href="#">개인정보처리방침</a>
-      <a href="#">전자상거래표준약관</a>
+      <a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">전자상거래표준약관</a>
       <span style="margin-left:0.5rem; color:#bbb;">© 2025 SUJIN SANSIK. All rights reserved.</span>
     </div>
   </div>
@@ -657,32 +403,59 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
+    // 타이틀 애니메이션
     const rotator = document.querySelector('.title-rotator');
     if (rotator) {
       const titles = rotator.querySelectorAll('.title-item');
       if (titles.length > 0) {
         let currentIndex = 0;
-
-        function rotateTitles() {
+        titles[0].classList.add('active');
+        setInterval(() => {
           const prevIndex = currentIndex;
           currentIndex = (currentIndex + 1) % titles.length;
-
           titles[prevIndex].classList.remove('active');
           titles[prevIndex].classList.add('prev');
-          
           titles[currentIndex].classList.remove('prev');
           titles[currentIndex].classList.add('active');
-          
-          setTimeout(() => {
-            titles[prevIndex].classList.remove('prev');
-          }, 500);
-        }
-        
-        titles[0].classList.add('active');
-        
-        setInterval(rotateTitles, 3000);
+          setTimeout(() => { titles[prevIndex].classList.remove('prev'); }, 500);
+        }, 3000);
       }
     }
+
+    // 모바일 메뉴 및 검색 기능
+    const menuBtn = document.getElementById('menu-btn');
+    const searchBtn = document.getElementById('search-btn');
+    const sideMenu = document.getElementById('side-menu');
+    const searchOverlay = document.getElementById('search-overlay');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const closeSearchBtn = document.getElementById('close-search-btn');
+    const backdrop = document.getElementById('overlay-backdrop');
+
+    function openMenu() {
+      sideMenu.classList.add('open');
+      backdrop.classList.add('active');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeMenu() {
+      sideMenu.classList.remove('open');
+      backdrop.classList.remove('active');
+      document.body.classList.remove('no-scroll');
+    }
+
+    function openSearch() {
+      searchOverlay.classList.add('open');
+    }
+
+    function closeSearch() {
+      searchOverlay.classList.remove('open');
+    }
+
+    if (menuBtn) menuBtn.addEventListener('click', openMenu);
+    if (searchBtn) searchBtn.addEventListener('click', openSearch);
+    if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+    if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
+    if (backdrop) backdrop.addEventListener('click', closeMenu);
   });
 </script>
 
