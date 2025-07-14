@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>수진선식 스마트스토어형</title>
+<style>
+  /* 기본 스타일 */
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    color: #333;
+    background: #fff;
+    overflow-x: hidden; /* 가로 스크롤 방지 */
+  }
+
+  /* 최상단 안내 및 로그인 바 */
+  .top-bar {
+    background: #e5d3b3;
+    padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+  }
+  .top-bar .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    font-size: 0.9rem;
+    box-sizing: border-box;
+  }
+  .login-form a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #8b5e3c;
+    font-weight: bold;
+  }
+  .login-form a:hover {
+    text-decoration: underline;
+  }
+
+  /* 카테고리 내비게이션 바 */
+  .nav-bar {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 1rem 2rem;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+  .nav-bar a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem;
+  }
+  .nav-bar a:hover {
+    color: #8b5e3c;
+    font-weight: bold;
+  }
+
+  /* 모든 섹션에 적용될 호버 효과 */
+  .interactive-section {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  .interactive-section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+  }
+
+  /* 메인 배너 */
+  .main-banner {
+    background: #efebe3;
+    padding: 2rem 0;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .main-banner .inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+    width: 100%;
+  }
+  .main-banner .text {
+    flex: 1;
+    min-width: 300px;
+  }
+  .main-banner .text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
+  .main-banner .text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .main-banner .text a {
+    background: none;
+    border: 1px solid #333;
+    padding: 0.6rem 1.2rem;
+    margin-right: 0.8rem;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .main-banner .text a:hover {
+    background: #8b5e3c;
+    color: #fff;
+    border-color: #8b5e3c;
+  }
+  .main-banner .image {
+    flex: 1;
+    text-align: right;
+  }
+  .main-banner img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  /* 히어로 섹션 */
+  .hero {
+    background: #000 url('pic.png') no-repeat center center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 2.5rem 2rem;
+    box-sizing: border-box;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.6);
+  }
+  .hero > div {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    color: #fff;
+  }
+  .hero .main-heading {
+    font-size: 2.4rem;
+    line-height: 1.5;
+    font-weight: bold;
+    margin: 0 auto 2.5rem auto;
+    max-width: 700px;
+  }
+  .product-highlights {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+    text-align: left;
+  }
+  .highlight-item {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .highlight-item strong {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .hero-buttons {
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .hero .btn {
+    display: inline-block;
+    padding: 0.8rem 1.8rem;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 0.5rem;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+  .hero .btn-dark {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #fff;
+  }
+  .hero .btn-dark:hover {
+      background-color: #fff;
+      color: #333;
+  }
+  
+  /* 제품 섹션 */
+  .products {
+    background: #000 url('pic3.png') no-repeat center center;
+    background-size: cover;
+    text-align: center;
+    min-height: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: #fff;
+    padding: 2rem;
+    box-sizing: border-box;
+  }
+  .products::before {
+    content: "";
+    position: absolute;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.5);
+  }
+  .products > div {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+  }
+  .products h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .products p {
+    line-height: 1.6;
+  }
+
+  /* 카탈로그 섹션 */
+  .catalog-section {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 2rem;
+    box-sizing: border-box;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .catalog-text {
+    flex: 1;
+  }
+  .catalog-text h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  .catalog-text h3 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  .catalog-text p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+  .catalog-image {
+    flex: 1;
+  }
+  .catalog-image img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  /* 특징 섹션 */
+  .feature-section {
+    padding: 4rem 2rem;
+    background-color: #efebe3;
+    text-align: center;
+  }
+  .feature-section .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .feature-section h2 {
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+  }
+  .feature-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+  .feature-item {
+    flex: 1;
+    min-width: 280px;
+    max-width: 350px;
+  }
+  .feature-item .icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem auto;
+    stroke: #333;
+    stroke-width: 1;
+  }
+  .feature-item h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .feature-item p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+  }
+
+  /* 푸터 */
+  footer {
+    background: #fff;
+    color: #666;
+    padding: 2rem 0;
+    font-size: 0.8rem;
+    margin-top: 2rem;
+  }
+  footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+  }
+  .footer-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .footer-col {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 1.5rem;
+  }
+  .footer-bottom {
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+
+  /* 반응형 웹 디자인을 위한 미디어 쿼리 */
+  @media (max-width: 768px) {
+    h1, h2, .main-heading {
+      font-size: 1.8rem !important;
+      line-height: 1.4 !important;
+    }
+
+    .top-bar .container {
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: center;
+    }
+    .top-bar .container > div:first-child {
+        margin-bottom: 0.5rem;
+    }
+
+    .nav-bar {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+
+    .main-banner .inner,
+    .catalog-section {
+      flex-direction: column;
+      text-align: center;
+      gap: 1.5rem;
+    }
+    .catalog-section {
+        min-height: auto;
+    }
+
+    .hero .product-highlights {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-grid {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer-bottom {
+        text-align: center;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="container">
+    <div>“건강을 지켜온 시간” 어느덧 27년. 마음과 건강을 채우는 한 잔, 수진선식입니다.</div>
+    <div class="login-form">
+      <a href="#">로그인</a>
+      <a href="#">회원가입</a>
+      <a href="#">주문조회</a>
+    </div>
+  </div>
+</div>
+
+<nav class="nav-bar">
+  <a href="#">전체상품</a>
+  <a href="#">건강기능 선식</a>
+  <a href="#">영양 미숫가루</a>
+  <a href="#">전통 곡물가루</a>
+  <a href="#">온가족 건강차</a>
+  <a href="#">수제 마사지팩</a>
+  <a href="#">특가 & 행사상품</a>
+  <a href="#">리뷰 이벤트</a>
+  <a href="#">궁금해요 사장님!</a>
+</nav>
+
+<section class="main-banner interactive-section">
+  <div class="inner">
+    <div class="text">
+      <h2>자연을 담은 한 잔, 수진선식</h2>
+      <p>27년간 건강만을 생각해온 수진선식과 함께 자연의 영양을 매일 한 잔으로 만나보세요.</p>
+      <a href="#">제품 보러가기</a>
+      <a href="#">매장 방문하기</a>
+    </div>
+    <div class="image">
+      <img src="pic4.png" alt="자연을 담은 수진선식">
+    </div>
+  </div>
+</section>
+
+<section class="catalog-section interactive-section">
+  <div class="catalog-image">
+    <img src="pic2.png" alt="맞춤형 건강 상담 및 선식">
+  </div>
+  <div class="catalog-text">
+    <h2>건강한 하루를 시작하는 방법</h2>
+    <h3>개인 상담 예약</h3>
+    <p>전화 또는 방문을 통해 건강 상태와 선호도를 상담받으세요.</p>
+    <h3>맞춤 배합 제조</h3>
+    <p>상담 내용을 바탕으로 개인에게 최적화된 곡물 배합을 제조합니다.</p>
+    <h3>꾸준한 건강 관리</h3>
+    <p>매일 아침 한 잔씩 꾸준히 섭취하시면서 몸의 변화를 경험해보세요.</p>
+  </div>
+</section>
+
+<section class="hero interactive-section">
+  <div>
+    <h2 class="main-heading">27년 정성으로 빚어낸<br>맛과 영양을 담은 건강 선식</h2>
+    
+    <div class="product-highlights">
+      <div class="highlight-item">
+        <strong>영양가득 야채 당뇨선식</strong>
+        27년간 변함없이 사랑받아온, 수진선식의 자부심입니다.
+      </div>
+      <div class="highlight-item">
+        <strong>카무트효소 다이어트선식</strong>
+        카무트효소, 시서스, 마테와 고소한 곡물들의 영양소를 한 번에!
+      </div>
+      <div class="highlight-item">
+        <strong>탈모 관리 및 예방 선식</strong>
+        건강한 모발을 위한 맥주효모와 검은콩이 가득 들어간 맞춤형 선식!
+      </div>
+      <div class="highlight-item">
+        <strong>기타 맞춤형 영양선식</strong>
+        당신의 체질과 건강 상태, 입맛까지 세심히 살펴 하나하나 정성으로 빚어내는 맞춤 선식.
+      </div>
+    </div>
+    
+    <div class="hero-buttons">
+        <a href="#" class="btn btn-dark">제품 더 보기</a>
+    </div>
+  </div>
+</section>
+
+<section class="feature-section interactive-section">
+    <div class="container">
+      <h2>자연 원료 효소곡물가루의 특별함</h2>
+      <div class="feature-grid">
+        <div class="feature-item">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18L4.5 16.5L6.75 18L9 16.5L11.25 18L13.5 16.5L15.75 18L18 16.5L20.25 18L21.75 15.75V9.75C21.75 9.33579 21.4142 9 21 9H3C2.58579 9 2.25 9.33579 2.25 9.75V15.75L2.25 18Z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75L21.75 12.75"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9 9V5.25C9 4.42157 8.32843 3.75 7.5 3.75C6.67157 3.75 6 4.42157 6 5.25V9"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 9V6C15 4.89543 14.1046 4 13 4C11.8954 4 11 4.89543 11 6V9"></path><path stroke-linecap="round" stroke-linejoin="round" d="M18 9V6.75C18 5.7835 17.2165 5 16.25 5C15.2835 5 14.5 5.7835 14.5 6.75V9"></path>
+          </svg>
+          <h3>엄선된 자연 원료</h3>
+          <p>국내산 현미, 보리, 콩 등 엄선된 곡물만을 사용합니다.</p>
+        </div>
+        <div class="feature-item">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21,12c0,4.97-4.03,9-9,9c-1.89,0-3.64-0.58-5.04-1.59 C6.58,19.82,6,21,6,21s-1.18-0.42-1.59-1.04C3.58,18.64,3,16.89,3,15c0-4.97,4.03-9,9-9S21,7.03,21,12z" />
+          </svg>
+          <h3>특별한 효소 블렌딩</h3>
+          <p>30년간 연구해온 독자적인 효소 제조법으로 소화흡수를 돕습니다.</p>
+        </div>
+        <div class="feature-item">
+          <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.31802 12.318C2.55971 10.5597 2.55971 7.44029 4.31802 5.68198C6.07633 3.92367 9.19571 3.92367 10.954 5.68198L12 6.72798L13.046 5.68198C14.8043 3.92367 17.9237 3.92367 19.682 5.68198C21.4403 7.44029 21.4403 10.5597 19.682 12.318L12 19.9999L4.31802 12.318Z"></path>
+          </svg>
+          <h3>개인 맞춤 건강관리</h3>
+          <p>고객 한 분 한 분의 건강 상태를 고려한 맞춤형 배합을 제공합니다.</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+<section class="products interactive-section">
+  <div>
+    <h2>국내산 검은콩 <strong style="color:#ffda99;">70% 이상</strong>,<br>비교를 거부하는 진짜 검은콩선식</h2>
+    <p>
+      타협 없는 영양과 깊은 고소함을 선물합니다.<br>
+      흉내만 낸 선식과는 비교조차 하지 마세요.
+    </p>
+    <p style="margin-top:1.5rem; font-weight:bold;">
+      정성으로 쪄내고 고소함을 살린 로스팅.<br>
+      식탁에 품격을 더하세요.
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <strong>수진선식(주)</strong><br/>
+        사업자등록번호 123-45-67890<br/>
+        통신판매업신고 2025-부산부전-0001<br/>
+        대표자: 홍길동<br/>
+        부산 부산진구 중앙대로 123 부전시장 내<br/>
+        고객센터: 051-123-4567<br/>
+        sujin@sansik.com
+      </div>
+      <div class="footer-col">
+        <strong>고객센터</strong><br/>
+        월~금 09:00~18:00 (점심 12:00~13:00)<br/>
+        토/일/공휴일 휴무<br/>
+        1:1 문의 바로가기
+      </div>
+      <div class="footer-col">
+        <strong>전자상거래 분쟁처리</strong><br/>
+        051-123-4567<br/>
+        1:1 문의 바로가기
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <a href="#">이용약관</a>
+      <a href="#">개인정보처리방침</a>
+      <a href="#">전자상거래표준약관</a>
+      <span style="margin-left:0.5rem; color:#bbb;">© 2025 SUJIN SANSIK. All rights reserved.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
