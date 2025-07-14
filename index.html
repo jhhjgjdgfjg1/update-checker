@@ -56,6 +56,7 @@
     text-decoration: none;
     color: #333;
     padding: 0.5rem;
+    flex-shrink: 0; /* 모바일 스크롤 시 아이템이 줄어들지 않도록 설정 */
   }
   .nav-bar a:hover {
     color: #8b5e3c;
@@ -349,7 +350,7 @@
   /* 반응형 웹 디자인을 위한 미디어 쿼리 (수정) */
   @media (max-width: 768px) {
     h1, h2, .main-heading {
-      font-size: 1.6rem !important; /* 폰트 크기 일관성 있게 조정 */
+      font-size: 1.6rem !important;
       line-height: 1.5 !important;
     }
 
@@ -364,10 +365,14 @@
     }
 
     .nav-bar {
-      flex-wrap: wrap; /* 메뉴가 많을 경우 줄바꿈 허용 */
-      justify-content: center; /* 중앙 정렬 */
-      gap: 0.5rem 1rem;
+      justify-content: flex-start; /* 왼쪽 정렬로 변경 */
+      overflow-x: auto; /* 가로 스크롤 활성화 */
+      -ms-overflow-style: none;  /* IE and Edge - 스크롤바 숨기기 */
+      scrollbar-width: none;  /* Firefox - 스크롤바 숨기기 */
       padding: 1rem;
+    }
+    .nav-bar::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera - 스크롤바 숨기기 */
     }
 
     .main-banner .inner,
